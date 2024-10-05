@@ -4,7 +4,83 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nexify - Connecting You to the World</title>
-    <link rel="stylesheet" href="/styles.css">
+    <style>
+    body {
+        font-family: 'Arial', sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f4f4f4;
+    }
+    header {
+        background-color: #4CAF50;
+        color: white;
+        padding: 20px;
+        text-align: center;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    }
+    h1, h2 {
+        margin: 0;
+    }
+    section {
+        margin: 20px auto;
+        max-width: 800px;
+        text-align: center;
+    }
+    .btn {
+        background-color: #4CAF50;
+        color: white;
+        padding: 12px 24px;
+        text-decoration: none;
+        border-radius: 5px;
+        cursor: pointer;
+        border: none;
+        margin: 10px;
+        transition: background-color 0.3s, transform 0.2s;
+    }
+    .btn:hover {
+        background-color: #45a049;
+        transform: scale(1.05);
+    }
+    .intermediary, .subsidiary, .request {
+        margin-bottom: 15px;
+        padding: 15px;
+        background-color: #fff;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        transition: box-shadow 0.3s;
+    }
+    .intermediary:hover, .subsidiary:hover, .request:hover {
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    }
+    form {
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        margin: 20px auto;
+        max-width: 600px;
+        text-align: left;
+    }
+    label {
+        font-weight: bold;
+    }
+    input, textarea {
+        width: 100%;
+        padding: 10px;
+        margin: 8px 0;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-sizing: border-box;
+    }
+    textarea {
+        resize: vertical;
+    }
+    .success-message {
+        color: green;
+        margin-top: 15px;
+    }
+</style>
 </head>
 <body>
 
