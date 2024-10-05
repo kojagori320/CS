@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Package - Connecting You to the World</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        header {
+            background-color: #333;
+            color: white;
+            padding: 15px;
+            text-align: center;
+        }
+        section {
+            margin: 20px;
+            text-align: center;
+        }
+        .btn {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            cursor: pointer;
+            border: none;
+            margin: 5px;
+            transition: background-color 0.3s;
+        }
+        .btn:hover {
+            background-color: #45a049;
+        }
+        .intermediary, .subsidiary, .request {
+            margin-bottom: 15px;
+            padding: 10px;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Package</h1>
+    <p>Connecting You to Global Gifts</p>
+</header>
+
+<section>
+    <h2>Send and Receive Gifts from Around the World</h2>
+    <p>We connect customers with intermediaries who handle international purchases, packaging, and shipping.</p>
+    <button class="btn" onclick="openRequestForm()">Request a Package</button>
+    <button class="btn" onclick="openIntermediaries()">Next</button>
+    <button class="btn" onclick="openCustomerRequests()">View Customer Requests</button>
+</section>
+
+<div id="content" style="margin: 20px;"></div>
+
+<script>
+// Sample data to simulate customer requests
+const customerRequests = [
+    { name: "Alice", email: "alice@example.com", product: "Toys", country: "USA" },
+    { name: "Bob", email: "bob@example.com", product: "Books", country: "UK" },
+    { name: "Charlie", email: "charlie@example.com", product: "Clothes", country: "Canada" }
+];
+
+// Function to show request form
+function openRequestForm() {
+    const contentDiv = document.getElementById('content');
+    contentDiv.innerHTML = `
+        <h3>Request a Package</h3>
+        <form id="requestForm">
+            <label for="name">Name:</label><br>
+            <input type="text" id="name" name="name" required><br><br>
+            
+            <label for="email">Email:</label><br>
+            <input type="email" id="email" name="email" required><br><br>
+            
+            <label for="product">Product Description:</label><br>
+            <textarea id="product" name="product" rows="4" cols="40" required></textarea><br><br>
+            
+            <label for="country">Country of Purchase:</label><br>
+            <input type="text" id="country" name="country" required><br><br>
+            
+            <button type="button" class="btn" onclick="submitRequest()">Submit Request</button>
+        </form>
+    `;
+}
+
+// Function to show customer requests
+function openCustomerRequests() {
+    const contentDiv = document.getElementById('content');
+    contentDiv.innerHTML = `
+        <h3>Customer Requests</h3>
+        ${customerRequests.map(request => `
+            <div class="request">
+                <p><strong>Name:</strong> ${request.name}<br>
+                <strong>Email:</strong> ${request.email}<br>
+                <strong>Product:</strong> ${request.product}<br>
+                <strong>Country:</strong> ${request.country}<br>
+                <button class="btn" onclick="connectCustomer('${request.name}', '${request.email}')">Connect</button></p>
+            </div>
+        `).join('')}
+    `;
+    // Show collect goods button after customer requests
+    contentDiv.innerHTML += '<button class="btn" onclick="openCollectionForm()">Collect Goods</button>';
+}
+
+// Function to show collection form
+function openCollectionForm() {
+    const contentDiv = document.getElementById('content');
+    contentDiv.innerHTML = `
+        <h3>Collect Goods</h3>
+        <form id="collectionForm">
+            <label for="collectorName">Collector's Name:</label><br>
+            <input type="text" id="collectorName" name="collectorName" required><br><br>
+            
+            <label for="collectorEmail">Collector's Email:</label><br>
+            <input type="email" id="collectorEmail" name="collectorEmail" required><br><br>
+            
+            <label for="pickupAddress">Pickup Address:</label><br>
+            <textarea id="pickupAddress" name="pickupAddress" rows="4" cols="40" required></textarea><br><br>
+            
+            <label for="goodsDescription">Description of Goods:</label><br>
+            <textarea id="goodsDescription" name="goodsDescription" rows="4" cols="40" required></textarea><br><br>
+            
+            <button type="button" class="btn" onclick="submitCollection()">Submit Collection Request</button>
+        </form>
+    `;
+}
+
+// Function to simulate form submission for package request
+function submitRequest() {
+    alert('Request submitted successfully!');
+    document.getElementById('requestForm').reset();
+}
+
+// Function to simulate form submission for collection request
+function submitCollection() {
+    alert('Collection request submitted successfully!');
+    document.getElementById('collectionForm').reset();
+}
+
+// Function to connect with a customer
+function connectCustomer(name, email) {
+    alert(Connected with ${name}!\nEmail: ${email});
+}
+
+// Function to show intermediaries
+function openIntermediaries() {
+    const contentDiv = document.getElementById('content');
+    contentDiv.innerHTML = `
+        <h3>Available Intermediaries</h3>
+        <div class="intermediary">
+            <p><strong>John Doe</strong> - USA<br>Phone: 123-456-7890<br>Email: john@example.com <button class="btn" onclick="connect('John Doe', '123-456-7890', 'john@example.com')">Connect</button></p>
+        </div>
+        <div class="intermediary">
+            <p><strong>Jane Smith</strong> - UK<br>Phone: 098-765-4321<br>Email: jane@example.com <button class="btn" onclick="connect('Jane Smith', '098-765-4321', 'jane@example.com')">Connect</button></p>
+        </div>
+        <h3>Available Subsidiaries</h3>
+        <div class="subsidiary">
+            <p><strong>ABC Logistics</strong> - Canada<br>Phone: 555-123-4567<br>Email: info@abclogistics.com <button class="btn" onclick="connect('ABC Logistics', '555-123-4567', 'info@abclogistics.com')">Connect</button></p>
+        </div>
+        <div class="subsidiary">
+            <p><strong>XYZ Shipping</strong> - Australia<br>Phone: 555-987-6543<br>Email: contact@xyzshipping.com <button class="btn" onclick="connect('XYZ Shipping', '555-987-6543', 'contact@xyzshipping.com')">Connect</button></p>
+        </div>
+    `;
+}
+
+// Function to simulate connection with intermediary or subsidiary
+function connect(name, phone, email) {
+    alert(Connected with ${name}!\nPhone: ${phone}\nEmail: ${email});
+}
+</script>
+
+</body>
+</html>
