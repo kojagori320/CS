@@ -3,56 +3,94 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Package - Connecting You to the World</title>
+    <title>Nexify - Connecting You to the World</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Arial', sans-serif;
             margin: 0;
             padding: 0;
             background-color: #f4f4f4;
         }
         header {
-            background-color: #333;
+            background-color: #4CAF50;
             color: white;
-            padding: 15px;
+            padding: 20px;
             text-align: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+        }
+        h1, h2 {
+            margin: 0;
         }
         section {
-            margin: 20px;
+            margin: 20px auto;
+            max-width: 800px;
             text-align: center;
         }
         .btn {
             background-color: #4CAF50;
             color: white;
-            padding: 10px 20px;
+            padding: 12px 24px;
             text-decoration: none;
             border-radius: 5px;
             cursor: pointer;
             border: none;
-            margin: 5px;
-            transition: background-color 0.3s;
+            margin: 10px;
+            transition: background-color 0.3s, transform 0.2s;
         }
         .btn:hover {
             background-color: #45a049;
+            transform: scale(1.05);
         }
         .intermediary, .subsidiary, .request {
             margin-bottom: 15px;
-            padding: 10px;
+            padding: 15px;
             background-color: #fff;
             border: 1px solid #ccc;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: box-shadow 0.3s;
+        }
+        .intermediary:hover, .subsidiary:hover, .request:hover {
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+        form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            margin: 20px auto;
+            max-width: 600px;
+            text-align: left;
+        }
+        label {
+            font-weight: bold;
+        }
+        input, textarea {
+            width: 100%;
+            padding: 10px;
+            margin: 8px 0;
+            border: 1px solid #ccc;
             border-radius: 5px;
+            box-sizing: border-box;
+        }
+        textarea {
+            resize: vertical;
+        }
+        .success-message {
+            color: green;
+            margin-top: 15px;
         }
     </style>
 </head>
 <body>
 
 <header>
-    <h1>Package</h1>
+    <h1>Nexify</h1>
     <p>Connecting You to Global Gifts</p>
 </header>
 
 <section>
-    <h2>Send and Receive Gifts from Around the World</h2>
+    <h2>Send and Receive Parcels from Around the World</h2>
     <p>We connect customers with intermediaries who handle international purchases, packaging, and shipping.</p>
     <button class="btn" onclick="openRequestForm()">Request a Package</button>
     <button class="btn" onclick="openIntermediaries()">Next</button>
@@ -62,8 +100,7 @@
 <div id="content" style="margin: 20px;"></div>
 
 <script>
-// Sample data to simulate customer requests
-const customerRequests = [
+let customerRequests = [
     { name: "Alice", email: "alice@example.com", product: "Toys", country: "USA" },
     { name: "Bob", email: "bob@example.com", product: "Books", country: "UK" },
     { name: "Charlie", email: "charlie@example.com", product: "Clothes", country: "Canada" }
@@ -75,20 +112,21 @@ function openRequestForm() {
     contentDiv.innerHTML = `
         <h3>Request a Package</h3>
         <form id="requestForm">
-            <label for="name">Name:</label><br>
-            <input type="text" id="name" name="name" required><br><br>
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required>
             
-            <label for="email">Email:</label><br>
-            <input type="email" id="email" name="email" required><br><br>
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
             
-            <label for="product">Product Description:</label><br>
-            <textarea id="product" name="product" rows="4" cols="40" required></textarea><br><br>
+            <label for="product">Product Description:</label>
+            <textarea id="product" name="product" rows="4" required></textarea>
             
-            <label for="country">Country of Purchase:</label><br>
-            <input type="text" id="country" name="country" required><br><br>
+            <label for="country">Country of Purchase:</label>
+            <input type="text" id="country" name="country" required>
             
             <button type="button" class="btn" onclick="submitRequest()">Submit Request</button>
         </form>
+        <div class="success-message" id="successMessage"></div>
     `;
 }
 
@@ -107,48 +145,61 @@ function openCustomerRequests() {
             </div>
         `).join('')}
     `;
-    // Show collect goods button after customer requests
     contentDiv.innerHTML += '<button class="btn" onclick="openCollectionForm()">Collect Goods</button>';
 }
 
-// Function to show collection form
-function openCollectionForm() {
-    const contentDiv = document.getElementById('content');
-    contentDiv.innerHTML = `
-        <h3>Collect Goods</h3>
-        <form id="collectionForm">
-            <label for="collectorName">Collector's Name:</label><br>
-            <input type="text" id="collectorName" name="collectorName" required><br><br>
-            
-            <label for="collectorEmail">Collector's Email:</label><br>
-            <input type="email" id="collectorEmail" name="collectorEmail" required><br><br>
-            
-            <label for="pickupAddress">Pickup Address:</label><br>
-            <textarea id="pickupAddress" name="pickupAddress" rows="4" cols="40" required></textarea><br><br>
-            
-            <label for="goodsDescription">Description of Goods:</label><br>
-            <textarea id="goodsDescription" name="goodsDescription" rows="4" cols="40" required></textarea><br><br>
-            
-            <button type="button" class="btn" onclick="submitCollection()">Submit Collection Request</button>
-        </form>
-    `;
+// Function to convert form data to CSV and simulate submission
+function convertToCSV(data) {
+    const csvRows = [
+        ['Name', 'Email', 'Product Description', 'Country'],
+        [data.name, data.email, data.product, data.country]
+    ];
+    
+    return csvRows.map(row => row.join(',')).join('\n');
+}
+
+// Function to download CSV file
+function downloadCSV(data, fileName) {
+    const blob = new Blob([data], { type: 'text/csv' });
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.setAttribute('hidden', '');
+    a.setAttribute('href', url);
+    a.setAttribute('download', fileName);
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
 }
 
 // Function to simulate form submission for package request
 function submitRequest() {
-    alert('Request submitted successfully!');
+    const formData = {
+        name: document.getElementById('name').value,
+        email: document.getElementById('email').value,
+        product: document.getElementById('product').value,
+        country: document.getElementById('country').value
+    };
+    
+    // Add new request to customerRequests array
+    customerRequests.push(formData);
+    
+    // Generate CSV
+    const csvData = convertToCSV(formData);
+    downloadCSV(csvData, 'customer_requests.csv');
+    
+    document.getElementById('successMessage').innerText = 'Request submitted and saved as CSV!';
     document.getElementById('requestForm').reset();
 }
 
 // Function to simulate form submission for collection request
 function submitCollection() {
-    alert('Collection request submitted successfully!');
+    document.getElementById('collectionSuccessMessage').innerText = 'Collection request submitted successfully!';
     document.getElementById('collectionForm').reset();
 }
 
 // Function to connect with a customer
 function connectCustomer(name, email) {
-    alert(`Connected with ${name}!\nEmail: ${email}`);
+    alert(Connected with ${name}!\nEmail: ${email});
 }
 
 // Function to show intermediaries
@@ -174,9 +225,10 @@ function openIntermediaries() {
 
 // Function to simulate connection with intermediary or subsidiary
 function connect(name, phone, email) {
-    alert(`Connected with ${name}!\nPhone: ${phone}\nEmail: ${email}`);
+    alert(Connected with ${name}!\nPhone: ${phone}\nEmail: ${email});
 }
 </script>
+
 
 </body>
 </html>
